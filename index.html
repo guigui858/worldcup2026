@@ -208,7 +208,11 @@ nav button:hover,nav button.active{color:var(--green);border-color:var(--green);
 .check{display:none}
 .bracket-vs{font-size:.62rem;color:var(--muted);text-align:center;padding:3px 0;display:flex;align-items:center;justify-content:center;gap:10px;border-top:1px dashed rgba(255,255,255,.06);border-bottom:1px dashed rgba(255,255,255,.06);margin:3px 0}
 .bracket-vs .pred-score{color:var(--gold);font-weight:700;font-size:.78rem;letter-spacing:1px}
-.bracket-vs .draw-prob{color:var(--muted);font-size:.58rem;opacity:.7}
+.bracket-vs .draw-prob{color:#94a3b8;font-size:.68rem;opacity:.85;font-weight:500}
+/* 决赛 → 冠军卡 金色发光闭环连线 */
+.bracket-round:last-child .bracket-match{position:relative}
+.bracket-round:last-child .bracket-match::after{content:"";position:absolute;left:50%;bottom:-24px;width:3px;height:24px;background:linear-gradient(180deg,var(--gold),rgba(255,215,0,.4));box-shadow:0 0 12px rgba(255,215,0,.6);transform:translateX(-50%);pointer-events:none;animation:goldPulse 3s ease-in-out infinite}
+@keyframes goldPulse{0%,100%{opacity:1;box-shadow:0 0 12px rgba(255,215,0,.6)}50%{opacity:.7;box-shadow:0 0 20px rgba(255,215,0,.9)}}
 /* 决赛巨型冠军卡 */
 .champion-card{margin-top:24px;padding:24px 18px;background:linear-gradient(135deg,rgba(255,215,0,.18),rgba(0,255,135,.08));border-radius:18px;border:2px solid var(--gold);text-align:center;box-shadow:0 0 40px rgba(255,215,0,.25);position:relative;overflow:hidden}
 .champion-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(255,215,0,.15),transparent 70%);pointer-events:none}

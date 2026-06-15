@@ -183,15 +183,39 @@ nav button:hover,nav button.active{color:var(--green);border-color:var(--green);
 .team-card-players strong{color:var(--gold)}
 .team-card-worry{margin-top:8px;font-size:.78rem;color:var(--red);opacity:.8}
 
-/* Bracket */
+/* Bracket — Sprint 5.1 视觉升级 */
 .bracket-container{overflow-x:auto;padding:20px 0}
-.bracket{display:flex;gap:40px;min-width:1200px;align-items:center}
-.bracket-round{display:flex;flex-direction:column;gap:12px}
-.bracket-round h3{text-align:center;color:var(--green);font-size:.9rem;margin-bottom:8px}
-.bracket-match{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 14px;min-width:180px}
-.bracket-team{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:.85rem}
-.bracket-team.winner{color:var(--green);font-weight:700}
-.bracket-vs{font-size:.65rem;color:var(--muted);text-align:center}
+.bracket{display:flex;gap:36px;min-width:1180px;align-items:stretch;padding:10px 16px}
+.bracket-round{display:flex;flex-direction:column;justify-content:space-around;flex:1;min-width:180px;position:relative}
+.bracket-round h3{text-align:center;color:var(--green);font-size:.95rem;margin-bottom:14px;letter-spacing:1px;font-weight:800;text-shadow:0 0 12px rgba(0,255,135,.3)}
+.bracket-match{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 12px;min-width:170px;position:relative;transition:.2s;margin:6px 0}
+.bracket-match:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,255,135,.15);border-color:rgba(0,255,135,.4)}
+/* 横线 1：从每张卡右边伸出 18px（连到中间竖线） */
+.bracket-round:not(:last-child) .bracket-match::after{content:"";position:absolute;right:-18px;top:50%;width:18px;height:2px;background:rgba(0,255,135,.55);box-shadow:0 0 6px rgba(0,255,135,.3);pointer-events:none;transform:translateY(-50%)}
+/* 配对竖线：奇数项从自身中点向下延伸到下一张卡中点 */
+.bracket-round:not(:last-child) .bracket-match:nth-child(odd)::before{content:"";position:absolute;right:-18px;top:50%;width:2px;height:calc(100% + 24px);background:rgba(0,255,135,.55);box-shadow:0 0 6px rgba(0,255,135,.3);pointer-events:none}
+/* 横线 2：竖线中点（=配对中点）→ 下一列卡左侧。挂在奇数 match 上，用 ::after 实现，但 ::after 已用了 → 改用一个 wrapper ::before */
+/* 改为：奇数 match 内部 vs 元素的 .pred-score 后面挂一条横线 */
+.bracket-team{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:.85rem;gap:8px}
+.bracket-team .team-name{display:flex;align-items:center;gap:6px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bracket-team .team-prob{font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums;flex-shrink:0}
+.bracket-team.winner{color:var(--green);font-weight:700;background:linear-gradient(90deg,rgba(0,255,135,.12),transparent);border-left:3px solid var(--green);padding-left:9px}
+.bracket-team.winner .team-name{padding-left:0}
+.bracket-team.winner .team-prob{color:var(--green)}
+.bracket-team.winner .check{display:inline-block;color:var(--green);font-weight:900;margin-left:4px}
+.bracket-team.loser{color:var(--muted);opacity:.6}
+.bracket-team.loser .team-prob{opacity:.7}
+.check{display:none}
+.bracket-vs{font-size:.62rem;color:var(--muted);text-align:center;padding:3px 0;display:flex;align-items:center;justify-content:center;gap:10px;border-top:1px dashed rgba(255,255,255,.06);border-bottom:1px dashed rgba(255,255,255,.06);margin:3px 0}
+.bracket-vs .pred-score{color:var(--gold);font-weight:700;font-size:.78rem;letter-spacing:1px}
+.bracket-vs .draw-prob{color:var(--muted);font-size:.58rem;opacity:.7}
+/* 决赛巨型冠军卡 */
+.champion-card{margin-top:24px;padding:24px 18px;background:linear-gradient(135deg,rgba(255,215,0,.18),rgba(0,255,135,.08));border-radius:18px;border:2px solid var(--gold);text-align:center;box-shadow:0 0 40px rgba(255,215,0,.25);position:relative;overflow:hidden}
+.champion-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(255,215,0,.15),transparent 70%);pointer-events:none}
+.champion-trophy{font-size:3.2rem;line-height:1;filter:drop-shadow(0 0 12px rgba(255,215,0,.6))}
+.champion-label{font-size:.7rem;color:var(--gold);letter-spacing:3px;margin-top:10px;font-weight:700;text-transform:uppercase}
+.champion-name{font-size:1.6rem;font-weight:900;color:var(--gold);margin-top:6px;text-shadow:0 0 20px rgba(255,215,0,.5)}
+.champion-tagline{font-size:.75rem;color:var(--muted);margin-top:8px;font-style:italic}
 
 /* Leaderboard */
 .lb-tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
@@ -1567,10 +1591,12 @@ allThirds.push(scored[2]);
 allThirds.sort((a,b) => b.str - a.str);
 allThirds.slice(0,8).forEach(t => qualified.push(t.name));
 
-// 确定性胜负：实力强者胜，相同则按 FIFA rank（小者胜）
+// AI 预测胜负：用 predictMatch 的 winProb（与小组赛同一引擎）。胜率相同时 FIFA rank 小者胜
 function pickWinner(a, b) {
-const sa = getTeamStrength(a), sb = getTeamStrength(b);
-if (sa !== sb) return sa > sb ? a : b;
+const p = predictMatch(a, b, '淘汰赛');
+if (!p) return TEAMS[a].rank <= TEAMS[b].rank ? a : b;
+const pa = p.teamA.winProb, pb = p.teamB.winProb;
+if (pa !== pb) return pa > pb ? a : b;
 return TEAMS[a].rank <= TEAMS[b].rank ? a : b;
 }
 
@@ -1596,13 +1622,27 @@ const finalists = sfPairs.map(([a,b]) => pickWinner(a,b));
 const champion = pickWinner(finalists[0], finalists[1]);
 
 function matchHTML(a, b, winner) {
-const ta = TEAMS[a], tb = TEAMS[b];
+const raw = predictMatch(a, b, '淘汰赛');
+const p = raw ? {predictedScore: raw.predictedScore, probA: raw.teamA.winProb, probB: raw.teamB.winProb, draw: raw.draw} : {predictedScore:'?-?', probA:50, probB:50, draw:0};
+const aWin = a === winner, bWin = b === winner;
 return `<div class="bracket-match">
-<div class="bracket-team ${a===winner?'winner':''}">${flagHTML(a)} ${a}</div>
-<div class="bracket-vs">vs</div>
-<div class="bracket-team ${b===winner?'winner':''}">${flagHTML(b)} ${b}</div>
+<div class="bracket-team ${aWin?'winner':'loser'}">
+  <span class="team-name">${flagHTML(a)} ${a}${aWin?'<span class="check">✓</span>':''}</span>
+  <span class="team-prob">${p.probA}%</span>
+</div>
+<div class="bracket-vs">
+  <span class="pred-score">${p.predictedScore}</span>
+  <span class="draw-prob">平 ${p.draw}%</span>
+</div>
+<div class="bracket-team ${bWin?'winner':'loser'}">
+  <span class="team-name">${flagHTML(b)} ${b}${bWin?'<span class="check">✓</span>':''}</span>
+  <span class="team-prob">${p.probB}%</span>
+</div>
 </div>`;
 }
+
+const finalPred = predictMatch(finalists[0], finalists[1], '淘汰赛');
+const champProb = !finalPred ? 50 : (champion === finalists[0] ? finalPred.teamA.winProb : finalPred.teamB.winProb);
 
 container.innerHTML = `
 <div class="bracket-round">
@@ -1624,10 +1664,11 @@ ${sfPairs.map(([a,b]) => matchHTML(a,b, pickWinner(a,b))).join('')}
 <div class="bracket-round">
 <h3>决赛</h3>
 ${matchHTML(finalists[0], finalists[1], champion)}
-<div style="text-align:center;margin-top:16px;padding:16px;background:linear-gradient(135deg,rgba(255,215,0,.1),rgba(0,255,135,.1));border-radius:12px;border:1px solid var(--gold)">
-<div style="font-size:2rem">🏆</div>
-<div style="font-size:1.2rem;font-weight:800;color:var(--gold);margin-top:8px">${flagHTML(champion)} ${champion}</div>
-<div style="font-size:.8rem;color:var(--muted)">AI预测冠军</div>
+<div class="champion-card">
+<div class="champion-trophy">🏆</div>
+<div class="champion-label">AI 预测冠军</div>
+<div class="champion-name">${flagHTML(champion)} ${champion}</div>
+<div class="champion-tagline">夺冠路径胜率约 ${champProb}% · 仅 AI 推演，仅供娱乐</div>
 </div>
 </div>`;
 }

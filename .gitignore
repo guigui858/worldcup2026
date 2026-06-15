@@ -1,0 +1,27 @@
+# 备份文件 — 本地保留，不推到公开仓库
+*.bak
+*.backup
+*.before_*
+
+# 系统/编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# OneDrive 临时文件
+~$*
+*.tmp
+
+# cron 工作文件（本地 elo/result 状态，不分享）
+.elo_*.json
+.elo-*.md
+.pending-*.json
+.result-*.md
+
+# 个人开工笔记
+下次开工指南-*.md
+
+# 工程内部文档（可选 — 若想完全公开删掉本节）
+# 工程清单-*.md

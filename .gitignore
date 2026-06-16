@@ -18,6 +18,8 @@ desktop.ini
 .elo_*.json
 .elo-*.md
 .pending-*.json
+.last_autoapply.json
+.result-changelog.md
 .result-*.md
 
 # 个人开工笔记

@@ -294,7 +294,7 @@ nav{justify-content:center}
 </div>
 
 <!-- AI 战绩看板 -->
-<div id="ai-scoreboard" style="margin:20px 0 28px;padding:18px 20px;background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);border:1px solid var(--border);border-radius:12px">
+<div id="ai-scoreboard" style="margin:20px 0 28px;padding:18px 20px;background:linear-gradient(135deg,#fce7f3 0%,#fbcfe8 100%);border:2px solid var(--pink);border-radius:20px">
 <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:14px">
 <div>
 <h3 style="margin:0;font-size:1.05rem">🎯 AI 战绩看板 <span style="font-size:.75rem;color:var(--muted);font-weight:400;margin-left:8px">逐场对错明细，AI 翻车也大方承认</span></h3>
@@ -427,7 +427,7 @@ nav{justify-content:center}
 <p style="color:var(--muted);margin-bottom:24px;font-size:.88rem;line-height:1.7">这页是写给较真球迷的「拆开盒子看里面」。所有公式、数据源、已知缺陷都摆在这里——你可以监督我们，也可以拿这套思路自己复现。</p>
 
 <!-- 1. 数据来源 -->
-<div style="margin-bottom:28px;padding:18px 20px;background:rgba(15,23,42,.5);border:1px solid var(--border);border-radius:10px">
+<div style="margin-bottom:28px;padding:18px 20px;background:rgba(252,231,243,.7);border:1px solid var(--border);border-radius:10px">
 <h3 style="margin:0 0 14px;font-size:1.1rem;color:#a78bfa">① 数据来源（每条都标了客观/主观）</h3>
 <table style="width:100%;border-collapse:collapse;font-size:.85rem">
 <thead><tr style="border-bottom:1px solid var(--border);color:var(--muted)"><th style="text-align:left;padding:8px 6px">字段</th><th style="text-align:left;padding:8px 6px">来源</th><th style="text-align:left;padding:8px 6px">类型</th></tr></thead>
@@ -439,36 +439,36 @@ nav{justify-content:center}
 <tr><td style="padding:8px 6px"><b>球员阵容、教练、伤病</b></td><td style="padding:8px 6px">编辑整理，每场赛前更新</td><td style="padding:8px 6px"><span style="color:#fbbf24">※ 主观</span></td></tr>
 </tbody>
 </table>
-<p style="margin:12px 0 0;color:var(--muted);font-size:.78rem;line-height:1.6">📌 <b style="color:#cbd5e1">铁律</b>：所有"客观"字段必须可被第三方验证；所有"主观"字段必须在 UI 加 ※ 角标 + tooltip"编辑主观评估"。我们不混淆这两类。</p>
+<p style="margin:12px 0 0;color:var(--muted);font-size:.78rem;line-height:1.6">📌 <b style="color:#9d174d">铁律</b>：所有"客观"字段必须可被第三方验证；所有"主观"字段必须在 UI 加 ※ 角标 + tooltip"编辑主观评估"。我们不混淆这两类。</p>
 </div>
 
 <!-- 2. 算法 -->
-<div style="margin-bottom:28px;padding:18px 20px;background:rgba(15,23,42,.5);border:1px solid var(--border);border-radius:10px">
+<div style="margin-bottom:28px;padding:18px 20px;background:rgba(252,231,243,.7);border:1px solid var(--border);border-radius:10px">
 <h3 style="margin:0 0 14px;font-size:1.1rem;color:#a78bfa">② 算法 · 三步走</h3>
 
 <div style="margin-bottom:18px">
-<div style="font-size:.95rem;font-weight:600;color:#e2e8f0;margin-bottom:6px">Step 1 · 计算"队伍强度"</div>
-<pre style="background:#0f172a;padding:12px 14px;border-radius:6px;font-size:.82rem;color:#a5b4fc;overflow-x:auto;border:1px solid var(--border);margin:0">strength = ((elo - 1400) / 16 + 55) × <b style="color:#fbbf24">0.6</b>
-         + (attack + defense + form) / 3 × <b style="color:#fbbf24">0.4</b></pre>
-<p style="margin:8px 0 0;color:var(--muted);font-size:.8rem;line-height:1.6">Elo 占 60%（客观主导），主观评估占 40%（捕捉短期状态）。<b style="color:#cbd5e1">这是 Sprint 2.1 改的关键决定</b>——之前主观为主导致排行榜里"摩洛哥/挪威"等 Elo 不够但主观虚高的队排进 Top 10，违反诚信。改完之后西班牙凭 Elo 2157 升至 #1，符合一线博彩公司排序。</p>
+<div style="font-size:.95rem;font-weight:600;color:#9d174d;margin-bottom:6px">Step 1 · 计算"队伍强度"</div>
+<pre style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);padding:12px 14px;border-radius:12px;font-size:.82rem;color:#9d174d;overflow-x:auto;border:1px solid var(--pink);margin:0">strength = ((elo - 1400) / 16 + 55) × <b style="color:#b45309">0.6</b>
+         + (attack + defense + form) / 3 × <b style="color:#b45309">0.4</b></pre>
+<p style="margin:8px 0 0;color:var(--muted);font-size:.8rem;line-height:1.6">Elo 占 60%（客观主导），主观评估占 40%（捕捉短期状态）。<b style="color:#9d174d">这是 Sprint 2.1 改的关键决定</b>——之前主观为主导致排行榜里"摩洛哥/挪威"等 Elo 不够但主观虚高的队排进 Top 10，违反诚信。改完之后西班牙凭 Elo 2157 升至 #1，符合一线博彩公司排序。</p>
 </div>
 
 <div style="margin-bottom:18px">
-<div style="font-size:.95rem;font-weight:600;color:#e2e8f0;margin-bottom:6px">Step 2 · 推导期望进球数 λ（泊松分布的均值）</div>
-<pre style="background:#0f172a;padding:12px 14px;border-radius:6px;font-size:.82rem;color:#a5b4fc;overflow-x:auto;border:1px solid var(--border);margin:0">strengthDiff = strengthA - strengthB
+<div style="font-size:.95rem;font-weight:600;color:#9d174d;margin-bottom:6px">Step 2 · 推导期望进球数 λ（泊松分布的均值）</div>
+<pre style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);padding:12px 14px;border-radius:12px;font-size:.82rem;color:#9d174d;overflow-x:auto;border:1px solid var(--pink);margin:0">strengthDiff = strengthA - strengthB
 λA = base + strengthDiff × scale + homeAdv  // 强队进球期望更高
 λB = base - strengthDiff × scale            // 弱队进球期望更低</pre>
 <p style="margin:8px 0 0;color:var(--muted);font-size:.8rem;line-height:1.6">两支队的"期望进球"不是猜的，而是从强度差按比例推导。强队 vs 弱队 λ 差距大；势均力敌 λA ≈ λB ≈ 1.2。</p>
 </div>
 
 <div>
-<div style="font-size:.95rem;font-weight:600;color:#e2e8f0;margin-bottom:6px">Step 3 · 用独立泊松联合分布枚举所有比分（<span style="color:#a78bfa">这是 Sprint 2.3 的核心改进</span>）</div>
-<pre style="background:#0f172a;padding:12px 14px;border-radius:6px;font-size:.82rem;color:#a5b4fc;overflow-x:auto;border:1px solid var(--border);margin:0">for a in 0..7:
+<div style="font-size:.95rem;font-weight:600;color:#9d174d;margin-bottom:6px">Step 3 · 用独立泊松联合分布枚举所有比分（<span style="color:#a78bfa">这是 Sprint 2.3 的核心改进</span>）</div>
+<pre style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);padding:12px 14px;border-radius:12px;font-size:.82rem;color:#9d174d;overflow-x:auto;border:1px solid var(--pink);margin:0">for a in 0..7:
   for b in 0..7:
-    P(a-b) = pois(a, λA) × pois(b, λB)   // 独立泊松联合分布
+    P(a-b) = pois(a, λA) × pois(b, λB)   // 独立泊松联合分布</pre>
 排序取概率最高的 3 个 → Top-3 比分
 predictedScore = Top-1.score              // 主比分与 Top-1 对齐</pre>
-<p style="margin:8px 0 0;color:var(--muted);font-size:.8rem;line-height:1.6"><b style="color:#cbd5e1">为什么不用 Skellam？</b>Skellam 给的是"进球差 = -3, -2, ..., +3"分布，把"几比几"信息抹掉了。我们要展示具体比分，所以用联合分布枚举 8×8=64 个比分。<br><b style="color:#cbd5e1">为什么 predictedScore = Top-1？</b>之前用 <code style="color:#fbbf24">Math.round(λ)</code> 得到的"边缘均值"会和联合分布最大比分打架（同一张卡片出现两个相互矛盾的"主比分"）。对齐后，加拿大 vs 波黑 从 <code>2-1</code> 变 <code>1-1</code>，与实际平局结果一致。</p>
+<p style="margin:8px 0 0;color:var(--muted);font-size:.8rem;line-height:1.6"><b style="color:#9d174d">为什么不用 Skellam？</b>Skellam 给的是"进球差 = -3, -2, ..., +3"分布，把"几比几"信息抹掉了。我们要展示具体比分，所以用联合分布枚举 8×8=64 个比分。<br><b style="color:#9d174d">为什么 predictedScore = Top-1？</b>之前用 <code style="color:#fbbf24">Math.round(λ)</code> 得到的"边缘均值"会和联合分布最大比分打架（同一张卡片出现两个相互矛盾的"主比分"）。对齐后，加拿大 vs 波黑 从 <code>2-1</code> 变 <code>1-1</code>，与实际平局结果一致。</p>
 </div>
 </div>
 
@@ -479,24 +479,24 @@ predictedScore = Top-1.score              // 主比分与 Top-1 对齐</pre>
 
 <div style="margin-bottom:14px">
 <div style="font-size:.92rem;font-weight:600;color:#fca5a5;margin-bottom:4px">⚠️ 局限 1 · Elo 历史滞后盲区</div>
-<p style="color:var(--muted);font-size:.82rem;line-height:1.6;margin:0">Elo 反映的是<b style="color:#cbd5e1">长期累积实力</b>，对"近期归化爆发"或"主力老化"反应慢。<b style="color:#fbbf24">典型翻车 1：6/13 美国 4-1 巴拉圭</b>——AI 因巴拉圭历史 Elo 较高预测它赢 (2-0)，但实际美国近期归化潮 + 巴拉圭主力老化让强弱关系完全反转。<b style="color:#fbbf24">典型翻车 2：6/14 荷兰 2-2 日本</b>——AI 押荷兰 1-0 胜，但日本旅欧球员近 4 年成长 + 荷兰后防失误终止历史悬殊。<b style="color:#cbd5e1">解药</b>：未来引入 H2H 近期交锋、伤病数据；目前只能靠主观评估打补丁。</p>
+<p style="color:var(--muted);font-size:.82rem;line-height:1.6;margin:0">Elo 反映的是<b style="color:#9d174d">长期累积实力</b>，对"近期归化爆发"或"主力老化"反应慢。<b style="color:#fbbf24">典型翻车 1：6/13 美国 4-1 巴拉圭</b>——AI 因巴拉圭历史 Elo 较高预测它赢 (2-0)，但实际美国近期归化潮 + 巴拉圭主力老化让强弱关系完全反转。<b style="color:#fbbf24">典型翻车 2：6/14 荷兰 2-2 日本</b>——AI 押荷兰 1-0 胜，但日本旅欧球员近 4 年成长 + 荷兰后防失误终止历史悬殊。<b style="color:#9d174d">解药</b>：未来引入 H2H 近期交锋、伤病数据；目前只能靠主观评估打补丁。</p>
 </div>
 
 <div style="margin-bottom:14px">
 <div style="font-size:.92rem;font-weight:600;color:#fca5a5;margin-bottom:4px">⚠️ 局限 2 · 平局收敛偏差</div>
-<p style="color:var(--muted);font-size:.82rem;line-height:1.6;margin:0">独立泊松联合分布在 <b>λA ≈ λB ≈ 1</b>（小组赛常态）时，<b style="color:#cbd5e1">1-1 / 0-0 / 1-0 / 0-1</b> 这几个低比分会瓜分大部分概率，让"势均力敌"的比赛系统性预测为 1-1。这数学上是对的，但作为"主比分"展示给球迷会显得保守。<br><b style="color:var(--green)">解药（Sprint 3.1 已实施 ✅）</b>：当 Top-1 是平局且一方明显占优 (｜probA-probB｜>12) 时，让 predictedScore 退回 Top-2；Top-3 列表保持真概率不变（球迷仍能看到联合分布最大确实是平局，知情权完整）。<br><b style="color:#fbbf24">⚠️ 诚实说这是 trade-off</b>：这条规则让"势均力敌但有微弱倾向"的场命中率更高（如 6/11 韩国 2-1 捷克：之前 1-1 ❌ → 现在 1-0 ✅），但"势均力敌且实际打平"的场会变差（如 6/12 加拿大 1-1 波黑：之前 1-1 ✅ → 现在 1-0 ❌）。净效果 8 场 +1（25% → 38%），但本质是"用观感换命中"，<b style="color:#cbd5e1">数学纯粹性下降</b>。所以 Top-3 列表保持真分布——较真的球迷可以看 Top-1 真概率自行判断。</p>
+<p style="color:var(--muted);font-size:.82rem;line-height:1.6;margin:0">独立泊松联合分布在 <b>λA ≈ λB ≈ 1</b>（小组赛常态）时，<b style="color:#9d174d">1-1 / 0-0 / 1-0 / 0-1</b> 这几个低比分会瓜分大部分概率，让"势均力敌"的比赛系统性预测为 1-1。这数学上是对的，但作为"主比分"展示给球迷会显得保守。<br><b style="color:var(--green)">解药（Sprint 3.1 已实施 ✅）</b>：当 Top-1 是平局且一方明显占优 (｜probA-probB｜>12) 时，让 predictedScore 退回 Top-2；Top-3 列表保持真概率不变（球迷仍能看到联合分布最大确实是平局，知情权完整）。<br><b style="color:#fbbf24">⚠️ 诚实说这是 trade-off</b>：这条规则让"势均力敌但有微弱倾向"的场命中率更高（如 6/11 韩国 2-1 捷克：之前 1-1 ❌ → 现在 1-0 ✅），但"势均力敌且实际打平"的场会变差（如 6/12 加拿大 1-1 波黑：之前 1-1 ✅ → 现在 1-0 ❌）。净效果 8 场 +1（25% → 38%），但本质是"用观感换命中"，<b style="color:#9d174d">数学纯粹性下降</b>。所以 Top-3 列表保持真分布——较真的球迷可以看 Top-1 真概率自行判断。</p>
 </div>
 
 <div>
 <div style="font-size:.92rem;font-weight:600;color:#fca5a5;margin-bottom:4px">⚠️ 局限 3 · 小样本无统计意义</div>
-<p style="color:var(--muted);font-size:.82rem;line-height:1.6;margin:0"><span id="m-total-3">10</span> 场样本下，<b style="color:#cbd5e1">命中率被运气主导</b>，不能反映算法质量。需要 ≥30 场（一般认为 100 场更稳）才有参考价值。看战绩看板时请同时看「对照基准」——AI 必须长期跑赢"33% 纯随机"和"50% 永远主队胜"才算合格。当前 <b>Top-3 命中率 <span id="m-top3-frac">6/10</span> = <span id="m-top3-pct">60</span>%</b>（实际比分被包含在 AI 给出的 Top-3 候选里），这才是新算法值得吹的肌肉。</p>
+<p style="color:var(--muted);font-size:.82rem;line-height:1.6;margin:0"><span id="m-total-3">10</span> 场样本下，<b style="color:#9d174d">命中率被运气主导</b>，不能反映算法质量。需要 ≥30 场（一般认为 100 场更稳）才有参考价值。看战绩看板时请同时看「对照基准」——AI 必须长期跑赢"33% 纯随机"和"50% 永远主队胜"才算合格。当前 <b>Top-3 命中率 <span id="m-top3-frac">6/10</span> = <span id="m-top3-pct">60</span>%</b>（实际比分被包含在 AI 给出的 Top-3 候选里），这才是新算法值得吹的肌肉。</p>
 </div>
 </div>
 
 <!-- 4. 五条铁律 -->
-<div style="margin-bottom:28px;padding:18px 20px;background:rgba(15,23,42,.5);border:1px solid var(--border);border-radius:10px">
+<div style="margin-bottom:28px;padding:18px 20px;background:rgba(252,231,243,.7);border:1px solid var(--border);border-radius:10px">
 <h3 style="margin:0 0 14px;font-size:1.1rem;color:#a78bfa">④ 五条铁律（自我监督）</h3>
-<ol style="margin:0;padding-left:24px;color:#cbd5e1;font-size:.85rem;line-height:1.9">
+<ol style="margin:0;padding-left:24px;color:#9d174d;font-size:.85rem;line-height:1.9">
 <li><b>所有展示数据必须真实</b>——禁止合成、随机游走、占位符代替真实比分。</li>
 <li><b>客观与主观分离</b>——主观字段必须有 ※ 角标 + tooltip 声明。</li>
 <li><b>排行榜必须用 getTeamStrength()</b>——不能拿单一主观字段（如纯 attack）排序，否则会让虚高队伍冒头。</li>
@@ -506,15 +506,15 @@ predictedScore = Top-1.score              // 主比分与 Top-1 对齐</pre>
 </div>
 
 <!-- 5. 怎么读懂 AI 的预测 -->
-<div style="padding:18px 20px;background:rgba(15,23,42,.5);border:1px solid var(--border);border-radius:10px">
+<div style="padding:18px 20px;background:rgba(252,231,243,.7);border:1px solid var(--border);border-radius:10px">
 <h3 style="margin:0 0 14px;font-size:1.1rem;color:#a78bfa">⑤ 怎么读懂一张预测卡片</h3>
 <ul style="margin:0;padding-left:20px;color:var(--muted);font-size:.85rem;line-height:1.9">
-<li><b style="color:#e2e8f0">主比分</b>（如 2-1）：联合分布的 Top-1，即"AI 认为最可能的具体比分"。</li>
-<li><b style="color:#e2e8f0">一句话解读</b>：基于 probDiff / λ总和 / tier 落差自动套 7 个场景模板（强强对话 / 爆冷温床 / 实力悬殊 / 闷战 / 进球大战 / 防守战 / 优势局），完全确定性。</li>
+<li><b style="color:#9d174d">主比分</b>（如 2-1）：联合分布的 Top-1，即"AI 认为最可能的具体比分"。</li>
+<li><b style="color:#9d174d">一句话解读</b>：基于 probDiff / λ总和 / tier 落差自动套 7 个场景模板（强强对话 / 爆冷温床 / 实力悬殊 / 闷战 / 进球大战 / 防守战 / 优势局），完全确定性。</li>
 <li><b style="color:#22c55e">绿色胶囊 (Top-1)</b>：最可能比分及其概率（一位小数 %）。</li>
 <li><b style="color:#facc15">金色胶囊 (Top-2)</b>：第二可能比分。</li>
 <li><b style="color:#94a3b8">灰色胶囊 (Top-3)</b>：第三可能比分。三者概率和约 30%~55%（剩下 60% 散在其它比分，符合足球真实分散度）。</li>
-<li><b style="color:#e2e8f0">key-factors</b>：算法给出的 3-5 条"为什么这么预测"的理由，便于球迷判断 AI 是否考虑周全。</li>
+<li><b style="color:#9d174d">key-factors</b>：算法给出的 3-5 条"为什么这么预测"的理由，便于球迷判断 AI 是否考虑周全。</li>
 </ul>
 </div>
 
@@ -1904,7 +1904,7 @@ bestHtml = `
 <b style="color:#fbbf24">AI 最高光时刻</b>
 <span style="color:var(--muted);font-size:.78rem">${bestRow.date}</span>
 <span><b>${bestRow.a}</b> <span style="color:var(--muted)">vs</span> <b>${bestRow.b}</b></span>
-<span style="color:var(--muted)">AI 预测</span><b style="color:#cbd5e1">${bestRow.predScore}</b>
+<span style="color:var(--muted)">AI 预测</span><b style="color:#9d174d">${bestRow.predScore}</b>
 <span style="color:var(--muted)">实际</span><b style="color:var(--green)">${bestRow.actScore}</b>
 <span style="margin-left:auto;padding:2px 8px;border-radius:4px;background:rgba(0,0,0,.35);color:${tierColor};font-size:.75rem;font-weight:600">${tier}${bestRow.actProb ? ' · 模型给该比分 '+bestRow.actProb+'%' : ''}</span>
 </div>`;
@@ -1935,7 +1935,7 @@ try {
 sumDescEl.innerHTML = `
 <div style="margin-bottom:10px">已校验 <strong style="color:var(--green)">${total}</strong> 场 · 胜负方向对 <strong style="color:var(--green)">${dirN}</strong> 场 (${dirPct}%) · 比分全中 <strong style="color:#fbbf24">${exactN}</strong> 场 · 大小球方向对 <strong style="color:var(--green)">${ouN}</strong> 场 · <strong style="color:#a78bfa">Top-3 比分包含实际</strong> <strong style="color:#a78bfa">${top3HitN}</strong> 场 (${top3Pct}%)</div>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;padding:10px;background:rgba(0,0,0,.25);border-radius:8px;border:1px dashed rgba(148,163,184,.25)">
-  <div style="font-size:.72rem;color:var(--muted);grid-column:1/-1;margin-bottom:2px">📊 <b style="color:#cbd5e1">对照基准</b>（同一批 ${total} 场，让你看 AI 是不是真比瞎猜强）</div>
+  <div style="font-size:.72rem;color:var(--muted);grid-column:1/-1;margin-bottom:2px">📊 <b style="color:#9d174d">对照基准</b>（同一批 ${total} 场，让你看 AI 是不是真比瞎猜强）</div>
   <div style="font-size:.78rem"><span style="color:var(--muted)">🎲 纯随机猜：</span><b style="color:#94a3b8">33%</b> <span style="color:var(--muted);font-size:.7rem">理论</span></div>
   <div style="font-size:.78rem"><span style="color:var(--muted)">🏠 永远猜主队胜：</span><b style="color:#94a3b8">${homePct}%</b></div>
   <div style="font-size:.78rem"><span style="color:var(--muted)">🤝 永远猜平局：</span><b style="color:#94a3b8">${drawPct}%</b></div>
@@ -1976,7 +1976,7 @@ badge = '❌ 翻车'; badgeColor = '#ef4444';
 comment = `AI 看走眼，预测 ${x.predScore} 实际 ${x.actScore}`;
 }
 return `
-<div style="padding:12px 14px;background:rgba(15,23,42,.5);border:1px solid ${badgeColor === '#ef4444' ? 'rgba(239,68,68,.4)' : 'var(--border)'};border-radius:8px">
+<div style="padding:12px 14px;background:rgba(252,231,243,.7);border:1px solid ${badgeColor === '#ef4444' ? 'rgba(239,68,68,.4)' : 'var(--border)'};border-radius:8px">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:.72rem;color:var(--muted)">
     <span>${x.date}</span>
     <span style="color:${badgeColor};font-weight:600">${badge}</span>

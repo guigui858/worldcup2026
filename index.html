@@ -38,7 +38,7 @@ nav button:hover,nav button.active{color:var(--green);border-color:var(--green);
 
 /* Dashboard */
 .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px;text-align:center}
 .stat-card .value{font-size:2rem;font-weight:800;color:var(--green)}
 .stat-card .label{font-size:.8rem;color:var(--muted);margin-top:4px}
 
@@ -117,14 +117,14 @@ nav button:hover,nav button.active{color:var(--green);border-color:var(--green);
 .pred-selects select{background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px 16px;border-radius:10px;font-size:1rem;flex:1;min-width:150px;cursor:pointer}
 .pred-selects select:focus{outline:none;border-color:var(--green)}
 .pred-vs{font-size:1.2rem;font-weight:800;color:var(--muted)}
-.pred-btn{background:linear-gradient(135deg,var(--green),#00cc6a);color:#000;border:none;padding:12px 32px;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;transition:.2s}
+.pred-btn{background:linear-gradient(135deg,var(--green),var(--purple));color:#fff;border:none;padding:12px 32px;border-radius:20px;font-size:1rem;font-weight:700;cursor:pointer;transition:.2s;box-shadow:0 4px 16px rgba(236,72,153,.3)}
 .pred-btn:hover{transform:scale(1.03);box-shadow:0 4px 20px rgba(0,255,135,.3)}
 .pred-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 
 .pred-result{display:none;animation:fadeIn .4s}
 .pred-result.show{display:block}
 
-.pred-result-card{background:linear-gradient(135deg,#0f172a,#1e1b4b);border:1px solid #3730a3;border-radius:16px;padding:32px;margin-bottom:20px}
+.pred-result-card{background:linear-gradient(135deg,#fce7f3,#fbcfe8);border:2px solid var(--pink);border-radius:24px;padding:32px;margin-bottom:20px}
 .pred-teams{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:24px}
 .pred-team{text-align:center;flex:1}
 .pred-team-flag{font-size:3.5rem}
@@ -156,7 +156,7 @@ nav button:hover,nav button.active{color:var(--green);border-color:var(--green);
 /* Groups */
 .groups-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
 .group-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden}
-.group-header{background:linear-gradient(90deg,var(--green),#00cc6a);color:#000;padding:12px 16px;font-weight:800;font-size:1.1rem;display:flex;justify-content:space-between}
+.group-header{background:linear-gradient(90deg,var(--green),var(--purple));color:#fff;padding:12px 16px;font-weight:800;font-size:1.1rem;display:flex;justify-content:space-between;border-radius:18px 18px 0 0}
 .group-table{width:100%;border-collapse:collapse}
 .group-table th{text-align:left;padding:8px 12px;font-size:.75rem;color:var(--muted);border-bottom:1px solid var(--border);font-weight:600}
 .group-table td{padding:8px 12px;font-size:.85rem;border-bottom:1px solid rgba(30,41,59,.5)}
@@ -217,7 +217,7 @@ nav button:hover,nav button.active{color:var(--green);border-color:var(--green);
 .bracket-round:last-child .bracket-match::after{content:"";position:absolute;left:50%;bottom:-24px;width:3px;height:24px;background:linear-gradient(180deg,var(--gold),rgba(255,215,0,.4));box-shadow:0 0 12px rgba(255,215,0,.6);transform:translateX(-50%);pointer-events:none;animation:goldPulse 3s ease-in-out infinite}
 @keyframes goldPulse{0%,100%{opacity:1;box-shadow:0 0 12px rgba(255,215,0,.6)}50%{opacity:.7;box-shadow:0 0 20px rgba(255,215,0,.9)}}
 /* 决赛巨型冠军卡 */
-.champion-card{margin-top:24px;padding:24px 18px;background:linear-gradient(135deg,rgba(255,215,0,.18),rgba(0,255,135,.08));border-radius:18px;border:2px solid var(--gold);text-align:center;box-shadow:0 0 40px rgba(255,215,0,.25);position:relative;overflow:hidden}
+.champion-card{margin-top:24px;padding:24px 18px;background:linear-gradient(135deg,rgba(252,211,77,.25),rgba(236,72,153,.15));border-radius:24px;border:2px solid var(--gold);text-align:center;box-shadow:0 0 40px rgba(252,211,77,.4);position:relative;overflow:hidden}
 .champion-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(255,215,0,.15),transparent 70%);pointer-events:none}
 .champion-trophy{font-size:3.2rem;line-height:1;filter:drop-shadow(0 0 12px rgba(255,215,0,.6))}
 .champion-label{font-size:.7rem;color:var(--gold);letter-spacing:3px;margin-top:10px;font-weight:700;text-transform:uppercase}
@@ -270,10 +270,11 @@ nav{justify-content:center}
 <div class="logo">
 <div class="logo-icon">⚽</div>
 <span>进球预测姬</span>
+<span style="font-size:1.1rem">🎀</span>
 </div>
 <nav>
 <button class="active" onclick="showSection('dashboard')">仪表盘</button>
-<button onclick="showSection('predict')">AI预测</button>
+<button onclick="showSection('predict')">⚽ 姬的预测</button>
 <button onclick="showSection('groups')">分组赛程</button>
 <button onclick="showSection('teams')">球队数据</button>
 <button onclick="showSection('bracket')">淘汰赛</button>
@@ -316,7 +317,7 @@ nav{justify-content:center}
 <!-- AI Prediction Engine -->
 <div id="predict" class="section">
 <div class="pred-engine">
-<h2>🤖 AI 预测引擎</h2>
+<h2>🎀 姬的预测引擎 <span style="font-size:.7rem;color:var(--muted)">(◕‿◕)و</span></h2>
 <p style="color:var(--muted);margin-bottom:20px;font-size:.9rem">基于 ELO 评分 + 编辑评估（攻防/状态）的加权胜率，叠加确定性泊松期望进球推导比分。AI 也会猜错——错了就认。</p>
 <div class="pred-selects">
 <select id="teamA-select"></select>
@@ -330,7 +331,7 @@ nav{justify-content:center}
 <option value="半决赛">半决赛</option>
 <option value="决赛">决赛</option>
 </select>
-<button class="pred-btn" onclick="runPrediction()">开始预测</button>
+<button class="pred-btn" onclick="runPrediction()">让姬来预测一下 ⚽</button>
 </div>
 </div>
 
@@ -401,7 +402,7 @@ nav{justify-content:center}
 
 <!-- Bracket -->
 <div id="bracket" class="section">
-<h2 style="font-size:1.3rem;margin-bottom:20px">🏆 淘汰赛对阵图 (AI预测)</h2>
+<h2 style="font-size:1.3rem;margin-bottom:20px">🏆 淘汰赛对阵图 <span style="color:var(--muted);font-size:.9rem">(姬的预测路径)</span></h2>
 <p style="color:var(--muted);margin-bottom:20px;font-size:.85rem">基于AI预测的小组赛结果自动生成的淘汰赛路径</p>
 <div class="bracket-container">
 <div class="bracket" id="bracket-content"></div>
@@ -1770,7 +1771,7 @@ ${sfPairs.map(([a,b]) => matchHTML(a,b, pickWinner(a,b))).join('')}
 ${matchHTML(finalists[0], finalists[1], champion)}
 <div class="champion-card">
 <div class="champion-trophy">🏆</div>
-<div class="champion-label">AI 预测冠军</div>
+<div class="champion-label">🏆 姬的预测冠军 🏆</div>
 <div class="champion-name">${flagHTML(champion)} ${champion}</div>
 <div class="champion-tagline">夺冠路径胜率约 ${champProb}% · 仅 AI 推演，仅供娱乐</div>
 </div>

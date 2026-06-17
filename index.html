@@ -5,11 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>进球预测姬 · 你的 AI 球评搭子</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚽</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0a0e17;--card:#111827;--card2:#1a2236;--green:#00ff87;--gold:#ffd700;--red:#ff4757;--blue:#3b82f6;--text:#e2e8f0;--muted:#64748b;--border:#1e293b}
-body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;line-height:1.6;overflow-x:hidden}
+:root{--bg:#fdf2f8;--card:#ffffff;--card2:#fce7f3;--green:#ec4899;--gold:#fcd34d;--red:#f43f5e;--blue:#a78bfa;--text:#831843;--muted:#9d174d;--border:#fbcfe8;--pink:#f9a8d4;--purple:#c084fc}
+body{background:var(--bg);color:var(--text);font-family:'Zen Maru Gothic','Noto Sans SC','Segoe UI',system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
 a{color:var(--green);text-decoration:none}
 
 /* Scrollbar */
@@ -18,11 +21,11 @@ a{color:var(--green);text-decoration:none}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 
 /* Header */
-.header{background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 50%,#0f172a 100%);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}
+.header{background:linear-gradient(135deg,#fce7f3 0%,#fbcfe8 50%,#fce7f3 100%);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}
 .header-inner{max-width:1400px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
 .logo{display:flex;align-items:center;gap:10px;font-size:1.3rem;font-weight:800}
 .logo-icon{width:36px;height:36px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem}
-.logo span{background:linear-gradient(90deg,var(--green),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo span{background:linear-gradient(90deg,var(--green),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 nav{display:flex;gap:4px;flex-wrap:wrap}
 nav button{background:transparent;border:1px solid transparent;color:var(--muted);padding:6px 14px;border-radius:8px;cursor:pointer;font-size:.85rem;transition:.2s}
 nav button:hover,nav button.active{color:var(--green);border-color:var(--green);background:rgba(0,255,135,.05)}

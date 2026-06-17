@@ -1934,11 +1934,11 @@ try {
 // "纯随机猜方向"期望命中率恒为 33.3%
 sumDescEl.innerHTML = `
 <div style="margin-bottom:10px">已校验 <strong style="color:var(--green)">${total}</strong> 场 · 胜负方向对 <strong style="color:var(--green)">${dirN}</strong> 场 (${dirPct}%) · 比分全中 <strong style="color:#fbbf24">${exactN}</strong> 场 · 大小球方向对 <strong style="color:var(--green)">${ouN}</strong> 场 · <strong style="color:#a78bfa">Top-3 比分包含实际</strong> <strong style="color:#a78bfa">${top3HitN}</strong> 场 (${top3Pct}%)</div>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;padding:10px;background:rgba(0,0,0,.25);border-radius:8px;border:1px dashed rgba(148,163,184,.25)">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;padding:10px;background:rgba(252,231,243,.7);border-radius:8px;border:1px dashed rgba(249,168,212,.5)">
   <div style="font-size:.72rem;color:var(--muted);grid-column:1/-1;margin-bottom:2px">📊 <b style="color:#9d174d">对照基准</b>（同一批 ${total} 场，让你看 AI 是不是真比瞎猜强）</div>
-  <div style="font-size:.78rem"><span style="color:var(--muted)">🎲 纯随机猜：</span><b style="color:#94a3b8">33%</b> <span style="color:var(--muted);font-size:.7rem">理论</span></div>
-  <div style="font-size:.78rem"><span style="color:var(--muted)">🏠 永远猜主队胜：</span><b style="color:#94a3b8">${homePct}%</b></div>
-  <div style="font-size:.78rem"><span style="color:var(--muted)">🤝 永远猜平局：</span><b style="color:#94a3b8">${drawPct}%</b></div>
+  <div style="font-size:.78rem"><span style="color:var(--muted)">🎲 纯随机猜：</span><b style="color:#9d174d;font-weight:800">33%</b> <span style="color:var(--muted);font-size:.7rem">理论</span></div>
+  <div style="font-size:.78rem"><span style="color:var(--muted)">🏠 永远猜主队胜：</span><b style="color:#9d174d;font-weight:800">${homePct}%</b></div>
+  <div style="font-size:.78rem"><span style="color:var(--muted)">🤝 永远猜平局：</span><b style="color:#9d174d;font-weight:800">${drawPct}%</b></div>
   <div style="font-size:.78rem"><span style="color:var(--muted)">🤖 AI 模型：</span><b style="color:${dirPct>=33?'var(--green)':'#ef4444'}">${dirPct}%</b> <span style="font-size:.7rem;color:${dirPct>=33?'var(--green)':'#ef4444'}">${dirPct>=33?'✓ 优于随机':'✗ 不如随机'}</span></div>
   </div>
   ${bestHtml}

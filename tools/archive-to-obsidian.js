@@ -15,7 +15,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PROJECT_DIR = 'C:/Users/21378/OneDrive/文档/世界杯预测网站';
-const OBSIDIAN_NOTE = 'C:/Users/21378/Obsidian/我的自媒体库/99-参考资料/Claude Code 工作记忆/project_worldcup_prediction.md';
+const OBSIDIAN_NOTE = 'E:/obsidian/ai知识库/99-参考资料/Claude Code 工作记忆/世界杯AI预测网站项目.md';
 const TODAY = new Date().toISOString().slice(0, 10);
 
 // 防垃圾关键词

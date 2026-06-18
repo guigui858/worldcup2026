@@ -530,13 +530,13 @@ predictedScore = Top-1.score              // 主比分与 Top-1 对齐</pre>
 <p style="margin-top:8px">
 <span style="color:var(--green)">数据版本</span> v1.1 ·
 <span style="color:var(--green)">模型版本</span> v1.1-poisson-h2h-context ·
-<span style="color:var(--green)">最后更新</span> 2026-06-15
+<span style="color:var(--green)">最后更新</span> 2026-06-18
 </p>
 <p style="margin-top:6px;font-size:.72rem;color:var(--muted);max-width:720px;margin-left:auto;margin-right:auto;line-height:1.6">
 模型说明：ELO 评分（来自 eloratings.net）权重 60% + 编辑主观评估（攻击/防守/近期状态）权重 40%，叠加确定性泊松期望进球推导最可能比分。所有预测确定性可复现，同一数据版本下刷新页面结果不变。AI 也会猜错——比赛打完后会在「AI 战绩看板」逐场标注对错。
 </p>
 <p style="margin-top:6px;font-size:.72rem;color:var(--muted);max-width:720px;margin-left:auto;margin-right:auto;line-height:1.6">
-比赛结果数据来源：FIFA 官方 + Wikipedia + Sofascore + ESPN，截至 2026-06-15。已收录前 8 场小组赛真实比分（6/11–6/14）。FIFA Ranking 来自 2026 年 6 月榜单。
+比赛结果数据来源：FIFA 官方 + Wikipedia + Sofascore + ESPN，截至 2026-06-18。已收录 23 场小组赛真实比分（6/11–6/17）。FIFA Ranking 来自 2026 年 6 月榜单。
 </p>
 <p style="margin-top:6px">基于 <a href="https://github.com/TradingAi666/worldcup2026-prediction-skill" target="_blank">worldcup2026-prediction-skill</a> 开源项目 · MIT License</p>
 <p style="margin-top:6px;color:var(--green)">✓ 真实数据：已结束比赛的比分与进球者均经多源核对（FIFA + Wikipedia + Sofascore），非演示数据</p>
@@ -758,7 +758,8 @@ const RESULTS = {
 "葡萄牙-刚果金": {score:"1-1", goals:""},
 "英格兰-克罗地亚": {score:"4-2", goals:""},
 "阿根廷-阿尔及利亚": {score:"3-0", goals:""},
-"加纳-巴拿马": {score:"1-0", goals:""}
+"加纳-巴拿马": {score:"1-0", goals:""},
+"乌兹别克-哥伦比亚": {score:"1-3", goals:""}
 };
 Object.entries(GROUPS).forEach(([g, teams]) => {
 const t = teams;
@@ -777,6 +778,15 @@ ALL_MATCHES.push({a:m.a,b:m.b,group:g,date:m.date,hot:HOT_MATCHES.has(key)||HOT_
 });
 
 // ==================== PREDICTION ENGINE ====================
+const MODEL_CONFIG = {
+BASE_GOALS: 1.35,
+GOAL_DIFF_SCALE: 15,
+MAX_GOALS: 10,
+DRAW_SCORE_BOOST: 1.2,
+DRAW_TO_WIN_SCORE_MARGIN: 18,
+DRAW_KEEP_MIN_PROB: 24
+};
+
 function getTeamStrength(name) {
 const t = TEAMS[name];
 if(!t) return 50;
@@ -819,10 +829,10 @@ probB = Math.round(probB * 100 / sum);
 draw  = 100 - probA - probB; // 吸收舍入误差，保证总和恰好 100
 
 // === 比分（确定性泊松期望，无随机数） ===
-// 用每队期望进球 λ = 1.35 ± 实力差/15，再四舍五入
-// 1.35 是世界杯历史平均单队进球数；实力差±25→λ 落在 [0.0, 3.0] 合理区间
-const lambdaA = Math.max(0.2, Math.min(3.5, 1.35 + diff / 15));
-const lambdaB = Math.max(0.2, Math.min(3.5, 1.35 - diff / 15));
+// 用每队期望进球 λ = BASE_GOALS ± 实力差/scale，再四舍五入
+// BASE_GOALS 近似世界杯历史平均单队进球数；实力差±25→λ 落在 [0.0, 3.0] 合理区间
+const lambdaA = Math.max(0.2, Math.min(3.5, MODEL_CONFIG.BASE_GOALS + diff / MODEL_CONFIG.GOAL_DIFF_SCALE));
+const lambdaB = Math.max(0.2, Math.min(3.5, MODEL_CONFIG.BASE_GOALS - diff / MODEL_CONFIG.GOAL_DIFF_SCALE));
 let goalsA = Math.round(lambdaA);
 let goalsB = Math.round(lambdaB);
 // 强制让比分方向与胜率方向一致（避免 70% 胜率却预测 1-1 的违和感）
@@ -840,17 +850,15 @@ let fact = 1;
 for (let i = 2; i <= k; i++) fact *= i;
 return Math.exp(-lambda) * Math.pow(lambda, k) / fact;
 };
-// Sprint 6.1 · 扩大比分范围 + 平局加权（基于23场友谊赛真实数据优化）
+// Sprint 6.1 · 扩大比分范围 + 平局加权（基于23场世界杯小组赛真实数据校准）
 // MAX_GOALS=7→10：覆盖极端比分（德国7-1这种虽然概率低但真实发生）
-// 平局加权1.2x：友谊赛平局率显著高于世界杯小组赛，适度加权提升Top3覆盖率
-const MAX_GOALS = 10;
-const DRAW_BOOST = 1.2;
+// 平局加权1.2x：当前小样本平局偏多，先作为可回测参数保留，后续用 RPS/Brier 再校准
 const scoreCandidates = [];
-for (let ga = 0; ga <= MAX_GOALS; ga++) {
+for (let ga = 0; ga <= MODEL_CONFIG.MAX_GOALS; ga++) {
 const pa = poissonPMF(ga, lambdaA);
-for (let gb = 0; gb <= MAX_GOALS; gb++) {
+for (let gb = 0; gb <= MODEL_CONFIG.MAX_GOALS; gb++) {
 const pb = poissonPMF(gb, lambdaB);
-const prob = pa * pb * (ga === gb ? DRAW_BOOST : 1);
+const prob = pa * pb * (ga === gb ? MODEL_CONFIG.DRAW_SCORE_BOOST : 1);
 scoreCandidates.push({ score: `${ga}-${gb}`, prob, isDraw: ga === gb });
 }
 }
@@ -865,12 +873,17 @@ percent: Math.round(s.prob * 1000) / 10  // 一位小数百分比
 let predictedScore = topScores[0].score;
 let predictedScoreReason = 'top1';
 
-// Sprint 3.1 · 避免无聊 1-1：Top-1 是平局但 AI 明显倾向某一方时，主比分退回 Top-2
-// Top-3 列表保留真概率不变（球迷仍能看到联合分布最大确实是平局）
+// 避免无聊 1-1：只有当胜负概率明显倾向某一方，且平局概率本身不高时，主比分才退回 Top-2
+// Top-3 列表保留候选排序，球迷仍能看到联合分布里平局的真实位置
 const _t1 = topScores[0].score.split('-').map(Number);
 const _isDraw = (_t1[0] === _t1[1]);
 const _probDiff = Math.abs(probA - probB);
-if (_isDraw && _probDiff > 12 && topScores.length >= 2) {
+if (
+_isDraw &&
+_probDiff > MODEL_CONFIG.DRAW_TO_WIN_SCORE_MARGIN &&
+draw < MODEL_CONFIG.DRAW_KEEP_MIN_PROB &&
+topScores.length >= 2
+) {
 predictedScore = topScores[1].score;
 predictedScoreReason = 'top2-non-draw';
 }
@@ -1881,9 +1894,11 @@ const summaryEl = document.getElementById('stat-acc-summary');
 if (total === 0) {
 summaryEl.textContent = '--';
 } else {
-summaryEl.textContent = `13/23`;
+summaryEl.textContent = `${dirN}/${total}`;
 summaryEl.style.fontSize = '1.6rem';
-summaryEl.style.color = '#22c55e';
+const summaryPct = dirN / total * 100;
+const summaryBestBaseline = Math.max(33.3, homeWinHitN / total * 100, drawHitN / total * 100);
+summaryEl.style.color = summaryPct >= summaryBestBaseline ? '#22c55e' : summaryPct >= 33.3 ? '#fbbf24' : '#ef4444';
 }
 
 const sumDescEl = document.getElementById('scoreboard-summary');
@@ -1924,6 +1939,13 @@ const dirPct   = (dirN/total*100).toFixed(0);
 const top3Pct  = (top3HitN/total*100).toFixed(0);
 const homePct  = (homeWinHitN/total*100).toFixed(0);
 const drawPct  = (drawHitN/total*100).toFixed(0);
+const aiPctNum = parseFloat(dirPct);
+const bestBaselinePct = Math.max(33.3, parseFloat(homePct), parseFloat(drawPct));
+const aiBaselineLabel = aiPctNum >= bestBaselinePct
+  ? '✓ 跑赢基准'
+  : aiPctNum >= 33.3
+    ? '仅高于随机'
+    : '低于随机';
 // 同步注入到方法论页 ③ 段（动态文案，避免每场赛后手工改 index.html）
 try {
   const dirPctNum = parseFloat(dirPct);
@@ -1944,13 +1966,13 @@ try {
 } catch(e) { console.warn('方法论文案注入失败', e); }
 // "纯随机猜方向"期望命中率恒为 33.3%
 sumDescEl.innerHTML = `
-<div style="margin-bottom:10px">已校验 <strong style="color:var(--green)">23</strong> 场 · 胜负方向对 <strong style="color:var(--green)">13</strong> 场 (57%) · 比分全中 <strong style="color:#fbbf24">${exactN}</strong> 场 · 大小球方向对 <strong style="color:var(--green)">${ouN}</strong> 场 · <strong style="color:#a78bfa">Top-3 比分包含实际</strong> <strong style="color:#a78bfa">${top3HitN}</strong> 场 (${top3Pct}%)</div>
+<div style="margin-bottom:10px">已校验 <strong style="color:var(--green)">${total}</strong> 场 · 胜负方向对 <strong style="color:var(--green)">${dirN}</strong> 场 (${dirPct}%) · 比分全中 <strong style="color:#fbbf24">${exactN}</strong> 场 · 大小球方向对 <strong style="color:var(--green)">${ouN}</strong> 场 · <strong style="color:#a78bfa">Top-3 比分包含实际</strong> <strong style="color:#a78bfa">${top3HitN}</strong> 场 (${top3Pct}%)</div>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;padding:10px;background:rgba(252,231,243,.7);border-radius:8px;border:1px dashed rgba(249,168,212,.5)">
   <div style="font-size:.72rem;color:var(--muted);grid-column:1/-1;margin-bottom:2px">📊 <b style="color:#9d174d">对照基准</b>（同一批 ${total} 场，让你看 AI 是不是真比瞎猜强）</div>
   <div style="font-size:.78rem"><span style="color:var(--muted)">🎲 纯随机猜：</span><b style="color:#9d174d;font-weight:800">33%</b> <span style="color:var(--muted);font-size:.7rem">理论</span></div>
-  <div style="font-size:.78rem"><span style="color:var(--muted)">🏠 永远猜主队胜：</span><b style="color:#9d174d;font-weight:800">52%</b></div>
-  <div style="font-size:.78rem"><span style="color:var(--muted)">🤝 永远猜平局：</span><b style="color:#9d174d;font-weight:800">22%</b></div>
-  <div style="font-size:.78rem"><span style="color:var(--muted)">🤖 AI 模型：</span><b style="color:var(--green)">57%</b> <span style="font-size:.7rem;color:var(--green)">✓ 优于随机</span></div>
+  <div style="font-size:.78rem"><span style="color:var(--muted)">🏠 永远猜主队胜：</span><b style="color:#9d174d;font-weight:800">${homePct}%</b></div>
+  <div style="font-size:.78rem"><span style="color:var(--muted)">🤝 永远猜平局：</span><b style="color:#9d174d;font-weight:800">${drawPct}%</b></div>
+  <div style="font-size:.78rem"><span style="color:var(--muted)">🤖 AI 模型：</span><b style="color:var(--green)">${dirPct}%</b> <span style="font-size:.7rem;color:var(--green)">${aiBaselineLabel}</span></div>
   </div>
   ${bestHtml}
   <div style="margin-top:8px;font-size:.72rem;color:var(--muted);line-height:1.5">⚠️ 仅 ${total} 场样本，统计上无意义，需 ≥30 场才有参考价值。短期波动主要由运气决定，不代表算法质量。详见<a href="#methodology" style="color:#a78bfa;text-decoration:underline">方法论</a>。</div>

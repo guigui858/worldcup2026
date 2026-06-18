@@ -840,13 +840,18 @@ let fact = 1;
 for (let i = 2; i <= k; i++) fact *= i;
 return Math.exp(-lambda) * Math.pow(lambda, k) / fact;
 };
-const MAX_GOALS = 7;
+// Sprint 6.1 · 扩大比分范围 + 平局加权（基于23场友谊赛真实数据优化）
+// MAX_GOALS=7→10：覆盖极端比分（德国7-1这种虽然概率低但真实发生）
+// 平局加权1.2x：友谊赛平局率显著高于世界杯小组赛，适度加权提升Top3覆盖率
+const MAX_GOALS = 10;
+const DRAW_BOOST = 1.2;
 const scoreCandidates = [];
 for (let ga = 0; ga <= MAX_GOALS; ga++) {
 const pa = poissonPMF(ga, lambdaA);
 for (let gb = 0; gb <= MAX_GOALS; gb++) {
 const pb = poissonPMF(gb, lambdaB);
-scoreCandidates.push({ score: `${ga}-${gb}`, prob: pa * pb });
+const prob = pa * pb * (ga === gb ? DRAW_BOOST : 1);
+scoreCandidates.push({ score: `${ga}-${gb}`, prob, isDraw: ga === gb });
 }
 }
 scoreCandidates.sort((x, y) => y.prob - x.prob);

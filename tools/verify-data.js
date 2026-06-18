@@ -70,9 +70,9 @@ console.log(`\n  总计: ${Object.keys(RESULTS).length} 场已完成比赛`);
 // 4. 检查算法统计逻辑
 console.log('\n【步骤 4】检查算法统计逻辑');
 
-function outcomeFromProb(pred) {
-  if (pred.draw >= pred.teamA.winProb && pred.draw >= pred.teamB.winProb) return 'D';
-  return pred.teamA.winProb >= pred.teamB.winProb ? 'A' : 'B';
+function outcomeFromPred(pred) {
+  const [a, b] = pred.predictedScore.split('-').map(Number);
+  return a > b ? 'A' : a < b ? 'B' : 'D';
 }
 
 function outcomeFromScore(score) {
@@ -94,7 +94,7 @@ for (const [key, result] of Object.entries(RESULTS)) {
   if (!TEAMS[a] || !TEAMS[b]) continue;
 
   const pred = predictMatch(a, b, '小组赛');
-  const probOut = outcomeFromProb(pred);
+  const probOut = outcomeFromPred(pred);
   const scoreOut = outcomeFromScore(pred.predictedScore);
   const actualOut = outcomeFromScore(result.score);
 

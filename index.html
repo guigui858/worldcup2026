@@ -1864,9 +1864,7 @@ const pred = predictMatch(m.a, m.b, '小组赛');
 if (!pred) return;
 const [pa, pb] = pred.predictedScore.split('-').map(Number);
 const [aa, ab] = m.result.score.split('-').map(Number);
-const predW = pred.draw >= pred.teamA.winProb && pred.draw >= pred.teamB.winProb
-  ? 'D'
-  : pred.teamA.winProb >= pred.teamB.winProb ? 'A' : 'B';
+const predW = pa > pb ? 'A' : pa < pb ? 'B' : 'D';
 const actW  = aa > ab ? 'A' : aa < ab ? 'B' : 'D';
 const exactHit  = (pa === aa && pb === ab);
 const dirHit    = (predW === actW);

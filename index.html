@@ -759,7 +759,7 @@ const RESULTS = {
 "英格兰-克罗地亚": {score:"4-2", goals:""},
 "阿根廷-阿尔及利亚": {score:"3-0", goals:""},
 "加纳-巴拿马": {score:"1-0", goals:""},
-"乌兹别克-哥伦比亚": {score:"1-3", goals:""}
+"乌兹别克斯坦-哥伦比亚": {score:"1-3", goals:""}
 };
 Object.entries(GROUPS).forEach(([g, teams]) => {
 const t = teams;
@@ -1864,7 +1864,9 @@ const pred = predictMatch(m.a, m.b, '小组赛');
 if (!pred) return;
 const [pa, pb] = pred.predictedScore.split('-').map(Number);
 const [aa, ab] = m.result.score.split('-').map(Number);
-const predW = pa > pb ? 'A' : pa < pb ? 'B' : 'D';
+const predW = pred.draw >= pred.teamA.winProb && pred.draw >= pred.teamB.winProb
+  ? 'D'
+  : pred.teamA.winProb >= pred.teamB.winProb ? 'A' : 'B';
 const actW  = aa > ab ? 'A' : aa < ab ? 'B' : 'D';
 const exactHit  = (pa === aa && pb === ab);
 const dirHit    = (predW === actW);

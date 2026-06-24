@@ -530,13 +530,13 @@ predictedScore = Top-1.score              // 主比分与 Top-1 对齐</pre>
 <p style="margin-top:8px">
 <span style="color:var(--green)">数据版本</span> v1.1 ·
 <span style="color:var(--green)">模型版本</span> v1.1-poisson-h2h-context ·
-<span style="color:var(--green)">最后更新</span> 2026-06-18
+<span style="color:var(--green)">最后更新</span> 2026-06-23
 </p>
 <p style="margin-top:6px;font-size:.72rem;color:var(--muted);max-width:720px;margin-left:auto;margin-right:auto;line-height:1.6">
 模型说明：ELO 评分（来自 eloratings.net）权重 60% + 编辑主观评估（攻击/防守/近期状态）权重 40%，叠加确定性泊松期望进球推导最可能比分。所有预测确定性可复现，同一数据版本下刷新页面结果不变。AI 也会猜错——比赛打完后会在「AI 战绩看板」逐场标注对错。
 </p>
 <p style="margin-top:6px;font-size:.72rem;color:var(--muted);max-width:720px;margin-left:auto;margin-right:auto;line-height:1.6">
-比赛结果数据来源：FIFA 官方 + Wikipedia + Sofascore + ESPN，截至 2026-06-18。已收录 23 场小组赛真实比分（6/11–6/17）。FIFA Ranking 来自 2026 年 6 月榜单。
+比赛结果数据来源：FIFA 官方 + Wikipedia + Sofascore + ESPN，截至 2026-06-23。已收录 44 场小组赛真实比分（6/11–6/22）。FIFA Ranking 来自 2026 年 6 月榜单。
 </p>
 <p style="margin-top:6px">基于 <a href="https://github.com/TradingAi666/worldcup2026-prediction-skill" target="_blank">worldcup2026-prediction-skill</a> 开源项目 · MIT License</p>
 <p style="margin-top:6px;color:var(--green)">✓ 真实数据：已结束比赛的比分与进球者均经多源核对（FIFA + Wikipedia + Sofascore），非演示数据</p>
@@ -779,7 +779,11 @@ const RESULTS = {
 "法国-伊拉克": {score:"3-0"},
 "挪威-塞内加尔": {score:"3-2"},
 "阿根廷-奥地利": {score:"2-0"},
-"约旦-阿尔及利亚": {score:"1-2"}
+"约旦-阿尔及利亚": {score:"1-2"},
+"葡萄牙-乌兹别克斯坦": {score:"5-0"},
+"哥伦比亚-刚果金": {score:"1-0"},
+"英格兰-加纳": {score:"0-0"},
+"巴拿马-克罗地亚": {score:"0-1"}
 };
 Object.entries(GROUPS).forEach(([g, teams]) => {
 const t = teams;
@@ -1884,7 +1888,9 @@ const pred = predictMatch(m.a, m.b, '小组赛');
 if (!pred) return;
 const [pa, pb] = pred.predictedScore.split('-').map(Number);
 const [aa, ab] = m.result.score.split('-').map(Number);
-const predW = pa > pb ? 'A' : pa < pb ? 'B' : 'D';
+const predW = pred.teamA.winProb > pred.teamB.winProb
+  ? (pred.teamA.winProb > pred.draw ? 'A' : 'D')
+  : (pred.teamB.winProb > pred.draw ? 'B' : 'D');
 const actW  = aa > ab ? 'A' : aa < ab ? 'B' : 'D';
 const exactHit  = (pa === aa && pb === ab);
 const dirHit    = (predW === actW);
